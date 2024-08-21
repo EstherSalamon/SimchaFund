@@ -1,5 +1,5 @@
 ﻿
-//This is the page that doesn't work. I redid it as MoneyDealings and did the logic in C# instead.
+//This is the page that doesn't work, but it is here to show the world how many times it was rewritten.
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
