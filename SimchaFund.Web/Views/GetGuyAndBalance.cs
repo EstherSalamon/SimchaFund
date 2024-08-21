@@ -4,6 +4,6 @@ namespace SimchaFund.Web.Views
 {
     public class GetGuyAndBalance : Contributor
     {
-        public decimal Balance { get; set; }
+        public double Balance { get; set; }
     }
 }

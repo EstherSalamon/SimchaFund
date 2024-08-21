@@ -21,28 +21,12 @@ namespace SimchaFund.Web.Controllers
         public GetContributorsVM GetAll()
         {
             ContributorRepository repo = new ContributorRepository(_connectionString);
-            List<Contributor> allOfThem = repo.GetAll();
-            List<GetGuyAndBalance> toPassIn = new List<GetGuyAndBalance>();
-            foreach(Contributor guy in allOfThem)
-            {
-                GetGuyAndBalance newOne = new GetGuyAndBalance
-                {
-                    Id = guy.Id,
-                    FirstName = guy.FirstName,
-                    LastName = guy.LastName,
-                    PhoneNumber = guy.PhoneNumber,
-                    AlwaysInclude = guy.AlwaysInclude,
-                    DateCreated = guy.DateCreated,
-                    Balance = repo.GetBalance(guy.Id)
-                };
-
-                toPassIn.Add(newOne);
-            }
+            List<GetGuyAndBalance> combined = Convert(repo.GetAll());
 
             GetContributorsVM vm = new GetContributorsVM
             {
-                Contributors = toPassIn,
-                Total = toPassIn.Select(t => t.Balance).Sum()
+                Contributors = combined,
+                Total = combined.Select(t => t.Balance).Sum()
             };
 
             return vm;
@@ -94,6 +78,30 @@ namespace SimchaFund.Web.Controllers
                 Contributor = repo.GetById(userId)
             };
             return vm;
+        }
+
+        public List<GetGuyAndBalance> Convert(List<Contributor> contributors)
+        {
+            List<GetGuyAndBalance> toPassIn = new List<GetGuyAndBalance>();
+            ContributorRepository repo = new ContributorRepository(_connectionString);
+
+            foreach (Contributor guy in contributors)
+            {
+                GetGuyAndBalance newOne = new GetGuyAndBalance
+                {
+                    Id = guy.Id,
+                    FirstName = guy.FirstName,
+                    LastName = guy.LastName,
+                    PhoneNumber = guy.PhoneNumber,
+                    AlwaysInclude = guy.AlwaysInclude,
+                    DateCreated = guy.DateCreated,
+                    Balance = repo.GetBalance(guy.Id)
+                };
+
+                toPassIn.Add(newOne);
+            }
+
+            return toPassIn;
         }
     }
 }

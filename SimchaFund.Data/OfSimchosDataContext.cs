@@ -26,5 +26,5 @@ public class OfSimchosDataContext : DbContext
 
     public DbSet<Contributor> Contributors { get; set; }
     public DbSet<Simcha> Simchos { get; set; }
-    public DbSet<ActioningOne> Actions { get; set; }
+    public DbSet<ActioningOne> ActioningOnes { get; set; }
 }

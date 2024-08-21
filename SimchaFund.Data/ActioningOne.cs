@@ -12,7 +12,7 @@ namespace SimchaFund.Data
         public int ContributorId { get; set; }
         public string Name { get; set; }
         public int SimchaId { get; set; }
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
         public DateTime Date { get; set; }
 
         public override string ToString()

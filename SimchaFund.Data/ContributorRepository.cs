@@ -46,20 +46,20 @@ namespace SimchaFund.Data
         public void AddAction(ActioningOne a)
         {
             OfSimchosDataContext context = new OfSimchosDataContext(_connectionString);
-            context.Actions.Add(a);
+            context.ActioningOnes.Add(a);
             context.SaveChanges();
         }
 
         public List<ActioningOne> GetAllActionsForUser(int id)
         {
             OfSimchosDataContext context = new OfSimchosDataContext(_connectionString);
-            return context.Actions.Where(a => a.ContributorId == id).ToList();
+            return context.ActioningOnes.Where(a => a.ContributorId == id).ToList();
         }
 
-        public decimal GetBalance(int id)
+        public double GetBalance(int id)
         {
             OfSimchosDataContext context = new OfSimchosDataContext(_connectionString);
-            return context.Actions.Where(a => a.ContributorId == id).Select(a => a.Amount).ToList().Sum();
+            return context.ActioningOnes.Where(a => a.ContributorId == id).Select(a => a.Amount).ToList().Sum();
         }
     }
 }

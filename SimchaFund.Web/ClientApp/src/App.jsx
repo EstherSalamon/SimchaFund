@@ -5,7 +5,7 @@ import Home from './Pages/Home';
 import Simchos from './Pages/Simchos';
 import Contributors from './Pages/Contributors';
 import History from './Pages/History';
-import Contributions from './Pages/Contributions';
+import MoneyDealings from './Pages/MoneyDealings';
 
 const App = () => {
     return (
@@ -15,7 +15,7 @@ const App = () => {
                 <Route path='/simchos' element={<Simchos />} />
                 <Route path='/contributors' element={<Contributors />} />
                 <Route path='/history/:userid' element={<History />} />
-                <Route path='/contributions/:simchaid' element={<Contributions />} />
+                <Route path='/contributions/:simchaid' element={<MoneyDealings />} />
             </Routes>
         </Layout>
     );

@@ -109,8 +109,8 @@ const Simchos = () => {
                             </td>
                             <td>{s.name}</td>
                             <td>{formatDate(s.date)}</td>
-                            <td>{s.contributors ? s.contributors.count : 0}/{totalContributors}</td>
-                            <td>${s.totalCollected}</td>
+                            <td>{s.contributors ? `${s.contributors}` : 0}/{totalContributors}</td>
+                            <td>${s.totalCollected >= 0 ? s.totalCollected : s.totalCollected * -1}</td>
                         </tr>)}
                 </tbody>
                 </table>

@@ -30,8 +30,8 @@ namespace SimchaFund.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
 
                     b.Property<int>("ContributorId")
                         .HasColumnType("int");
@@ -47,7 +47,7 @@ namespace SimchaFund.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actions");
+                    b.ToTable("ActioningOnes");
                 });
 
             modelBuilder.Entity("SimchaFund.Data.Contributor", b =>

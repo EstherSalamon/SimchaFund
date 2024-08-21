@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,17 +29,22 @@ namespace SimchaFund.Data
             context.SaveChanges();
         }
 
-        public void Update(Simcha s)
+        public void Update(List<ActioningOne> actions, int simchaId)
         {
             OfSimchosDataContext context = new OfSimchosDataContext(_connectionString);
-            context.Simchos.Update(s);
+            context.Database.ExecuteSqlInterpolated($"DELETE FROM ActioningOnes WHERE SimchaId = {simchaId}");
+            foreach(var c in actions)
+            {
+                c.Date = DateTime.Now;
+                context.ActioningOnes.Add(c);
+            }
             context.SaveChanges();
         }
 
-        public ActioningOne[] GetAllActionById(int id)
+        public List<ActioningOne> GetAllActionById(int id)
         {
             OfSimchosDataContext context = new OfSimchosDataContext(_connectionString);
-            return context.Actions.Where(a => a.SimchaId == id).ToArray();
+            return context.ActioningOnes.Where(a => a.SimchaId == id).ToList();
         }
 
         public Simcha GetById(int id)

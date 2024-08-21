@@ -6,11 +6,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SimchaFund.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Updated : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ActioningOnes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContributorId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SimchaId = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ActioningOnes", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Contributors",
                 columns: table => new
@@ -20,7 +37,6 @@ namespace SimchaFund.Data.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InitialDeposit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AlwaysInclude = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -30,30 +46,13 @@ namespace SimchaFund.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "History",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ContributorId = table.Column<int>(type: "int", nullable: false),
-                    SimchaId = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_History", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Simchos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SimchaName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ContributorsIdsJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TotalCollected = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,10 +64,10 @@ namespace SimchaFund.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Contributors");
+                name: "ActioningOnes");
 
             migrationBuilder.DropTable(
-                name: "History");
+                name: "Contributors");
 
             migrationBuilder.DropTable(
                 name: "Simchos");

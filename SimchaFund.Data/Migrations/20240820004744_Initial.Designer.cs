@@ -12,8 +12,8 @@ using SimchaFund.Data;
 namespace SimchaFund.Data.Migrations
 {
     [DbContext(typeof(OfSimchosDataContext))]
-    [Migration("20240812145645_Reinitiate")]
-    partial class Reinitiate
+    [Migration("20240820004744_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace SimchaFund.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SimchaFund.Data.Action", b =>
+            modelBuilder.Entity("SimchaFund.Data.ActioningOne", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,18 +33,24 @@ namespace SimchaFund.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
 
                     b.Property<int>("ContributorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Name")
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SimchaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actions");
+                    b.ToTable("ActioningOnes");
                 });
 
             modelBuilder.Entity("SimchaFund.Data.Contributor", b =>
@@ -63,9 +69,6 @@ namespace SimchaFund.Data.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("InitialDeposit")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -91,9 +94,6 @@ namespace SimchaFund.Data.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TotalCollected")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
