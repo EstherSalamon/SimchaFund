@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import '/Home.css';
 
 const Home = () => {
 
     return (
         <div className='container' style={{ marginTop: 80 }}>
-            <h1>I hear you're making a simcha! Mazel Tov!</h1>
-            <h3>I'm assuming you're very busy, then. I won't waste your time. Just follow the links.</h3>
+            <h1>Welcome to the SimchaFund Tracker</h1>
+            <hr/>
+            <h5>Aiming to eliminate SimchaFund Collecting since it was created, all those many moons ago. Good luck, and Mazel Tov!</h5>
             <br />
             <br />
             <br/>

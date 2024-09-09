@@ -25,13 +25,13 @@ namespace SimchaFund.Web.Controllers
             List<Contributor> contributors = cRepo.GetAll();
             List<Simcha> simchas = repo.GetAll();
 
-            List<GetSimchos> allMerged = new List<GetSimchos>();
+            List<GetSimchos> mergedSimchos = new List<GetSimchos>();
 
-            foreach(Simcha s in simchas)
+            foreach (Simcha s in simchas)
             {
-                List<ActioningOne> actions = repo.GetAllActionById(s.Id).ToList();
+                List<OneAction> actions = repo.GetAllActionById(s.Id).ToList();
 
-                GetSimchos thisOne = new GetSimchos
+                GetSimchos simcha = new GetSimchos
                 {
                     Id = s.Id,
                     Name = s.Name,
@@ -40,12 +40,12 @@ namespace SimchaFund.Web.Controllers
                     TotalCollected = actions.Select(a => a.Amount).Sum()
                 };
 
-                allMerged.Add(thisOne);
+                mergedSimchos.Add(simcha);
             }
 
             GetSimchosVM vm = new GetSimchosVM
             {
-                Simchos = allMerged,
+                Simchos = mergedSimchos,
                 TotalContributors = contributors.Count
             };
 
@@ -67,7 +67,7 @@ namespace SimchaFund.Web.Controllers
         }
 
         [HttpGet("actionsbyid")]
-        public List<ActioningOne> GetAllActions(int id)
+        public List<OneAction> GetAllActions(int id)
         {
             SimchaRepository repo = new SimchaRepository(_connectionString);
             return repo.GetAllActionById(id);
@@ -85,20 +85,18 @@ namespace SimchaFund.Web.Controllers
         {
             SimchaRepository sRepo = new SimchaRepository(_connectionString);
             ContributorRepository cRepo = new ContributorRepository(_connectionString);
-            List<ActioningOne> didContribute = sRepo.GetAllActionById(id);
+            List<OneAction> didContribute = sRepo.GetAllActionById(id);
 
-            foreach(var c in didContribute)
+            List<Contributor> contributors = cRepo.GetAll();
+            foreach (var c in contributors)
             {
-                Console.WriteLine($"{c.Id} {c.Name} {c.Date} {c.ContributorId} {c.SimchaId} {c.Amount}");
+                c.Balance = cRepo.GetBalance(c.Id);
             }
-
-            List<Contributor> allPeople = cRepo.GetAll();
-            List<GetGuyAndBalance> contributors = Convert(allPeople);
-            List<UpdateVM> iDidYourWorkAlready = new List<UpdateVM>();
+            List<UpdateVM> combineAllData = new List<UpdateVM>();
 
             foreach (var c in contributors)
             {
-                ActioningOne one = didContribute.FirstOrDefault(d => d.ContributorId == c.Id);
+                OneAction action = didContribute.FirstOrDefault(d => d.ContributorId == c.Id);
 
                 UpdateVM vm = new UpdateVM
                 {
@@ -107,56 +105,22 @@ namespace SimchaFund.Web.Controllers
                     AlwaysInclude = c.AlwaysInclude,
                     Name = $"{c.FirstName} {c.LastName}",
                     Balance = c.Balance,
-                    Contribute = (one != null || c.AlwaysInclude),
+                    Contribute = (action != null || c.AlwaysInclude),
                 };
 
-                if(one == null)
+                if (action == null)
                 {
                     vm.Amount = 5;
                 }
                 else
                 {
-                    vm.Amount = one.Amount * -1;
+                    vm.Amount = action.Amount;
                 }
 
-                iDidYourWorkAlready.Add(vm);
+                combineAllData.Add(vm);
             }
 
-            return iDidYourWorkAlready;
-
-            //EverythingBagel round = new EverythingBagel
-            //{
-            //    Contributors = iDidYourWorkAlready,
-            //    Simcha = sRepo.GetById(id)
-            //};
-
-            //Console.WriteLine(round.Simcha);
-
-            //return round;
-        }
-
-        public List<GetGuyAndBalance> Convert(List<Contributor> contributors)
-        {
-            List<GetGuyAndBalance> toPassIn = new List<GetGuyAndBalance>();
-            ContributorRepository repo = new ContributorRepository(_connectionString);
-
-            foreach (Contributor guy in contributors)
-            {
-                GetGuyAndBalance newOne = new GetGuyAndBalance
-                {
-                    Id = guy.Id,
-                    FirstName = guy.FirstName,
-                    LastName = guy.LastName,
-                    PhoneNumber = guy.PhoneNumber,
-                    AlwaysInclude = guy.AlwaysInclude,
-                    DateCreated = guy.DateCreated,
-                    Balance = repo.GetBalance(guy.Id)
-                };
-
-                toPassIn.Add(newOne);
-            }
-
-            return toPassIn;
+            return combineAllData;
         }
     }
 }

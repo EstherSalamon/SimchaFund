@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimchaFund.Data
 {
-    public class ActioningOne
+    public class OneAction
     {
         public int Id { get; set; }
         public int ContributorId { get; set; }

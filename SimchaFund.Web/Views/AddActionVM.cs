@@ -5,6 +5,6 @@ namespace SimchaFund.Web.Views
 {
     public class AddActionVM
     {
-        public ActioningOne Action { get; set; }
+        public OneAction Action { get; set; }
     }
 }

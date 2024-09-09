@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace SimchaFund.Data;
 
-public class OfSimchosDataContextFactory : IDesignTimeDbContextFactory<OfSimchosDataContext>
+public class SimchosDataContextFactory : IDesignTimeDbContextFactory<SimchosDataContext>
 {
-    public OfSimchosDataContext CreateDbContext(string[] args)
+    public SimchosDataContext CreateDbContext(string[] args)
     {
         var config = new ConfigurationBuilder()
            .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), 
@@ -18,6 +18,6 @@ public class OfSimchosDataContextFactory : IDesignTimeDbContextFactory<OfSimchos
            .AddJsonFile("appsettings.json")
            .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true).Build();
 
-        return new OfSimchosDataContext(config.GetConnectionString("ConStr"));
+        return new SimchosDataContext(config.GetConnectionString("ConStr"));
     }
 }

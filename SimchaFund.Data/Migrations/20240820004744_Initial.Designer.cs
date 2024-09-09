@@ -11,7 +11,7 @@ using SimchaFund.Data;
 
 namespace SimchaFund.Data.Migrations
 {
-    [DbContext(typeof(OfSimchosDataContext))]
+    [DbContext(typeof(SimchosDataContext))]
     [Migration("20240820004744_Initial")]
     partial class Initial
     {

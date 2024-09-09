@@ -4,7 +4,7 @@ namespace SimchaFund.Web.Views
 {
     public class HistoryVM
     {
-        public List<ActioningOne> AllActions { get; set; }
+        public List<OneAction> AllActions { get; set; }
         public Contributor Contributor { get; set; }
     }
 }

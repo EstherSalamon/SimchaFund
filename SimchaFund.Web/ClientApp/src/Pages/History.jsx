@@ -35,7 +35,7 @@ const History = () => {
                 <div className='col-md-8 offset-2'>
                     <h3>History for {contributor.firstName} {contributor.lastName}</h3>
                     <hr />
-                    {actions[0] == undefined ? <h1>{contributor.firstName} {contributor.lastName} has not committed anything to history yet.</h1> :
+                    {actions[0] == undefined ? <h1>{contributor.firstName} {contributor.lastName} has not done anything drastic enough to be committed to history yet. Sorry!</h1> :
                     <table className='table table-striped table-hover'>
                         <thead>
                             <tr>

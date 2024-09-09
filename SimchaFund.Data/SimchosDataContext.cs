@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SimchaFund.Data;
 
-public class OfSimchosDataContext : DbContext
+public class SimchosDataContext : DbContext
 {
     private readonly string _connectionString;
 
-    public OfSimchosDataContext(string connectionString)
+    public SimchosDataContext(string connectionString)
     {
         _connectionString = connectionString;
     }
@@ -26,5 +26,5 @@ public class OfSimchosDataContext : DbContext
 
     public DbSet<Contributor> Contributors { get; set; }
     public DbSet<Simcha> Simchos { get; set; }
-    public DbSet<ActioningOne> ActioningOnes { get; set; }
+    public DbSet<OneAction> Actions { get; set; }
 }

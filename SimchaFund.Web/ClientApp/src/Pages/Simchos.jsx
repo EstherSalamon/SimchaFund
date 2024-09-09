@@ -7,7 +7,7 @@ const Simchos = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [simchos, setSimchos] = useState([]);
-    const [show, setShow] = useState(false);
+    const [showModal, setShow] = useState(false);
     const [newSimcha, setNewSimcha] = useState({
         name: '',
         date: ''
@@ -73,7 +73,7 @@ const Simchos = () => {
             <hr />
             <button className='btn btn-primary' onClick={handleShow}>Add Simcha</button>
           
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add a Simcha</Modal.Title>
                 </Modal.Header>

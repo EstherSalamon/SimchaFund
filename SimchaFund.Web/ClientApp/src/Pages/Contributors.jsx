@@ -64,7 +64,7 @@ const Contributors = () => {
         });
     };
 
-    const getSpecificGuy = async id => {
+    const getSpecificContributor = async id => {
         setAddMode(false);
         const { data } = await axios.get(`/api/Contributors/byid?id=${id}`);
         setNewContributor(data);
@@ -99,7 +99,7 @@ const Contributors = () => {
     };
 
     const onEditClick = id => {
-        getSpecificGuy(id);
+        getSpecificContributor(id);
         handleShow();
     };
 
@@ -119,7 +119,7 @@ const Contributors = () => {
     };
 
     const onDepositClick = id => {
-        getSpecificGuy(id);
+        getSpecificContributor(id);
         setShowDeposit(true);
     };
 
@@ -180,7 +180,7 @@ const Contributors = () => {
                         </div>
                         <div className='row'>
                             <div className='col-md-6'>
-                                <input type='date' className='form-control mt-2' name='dateCreated' value={newContributor.dateCreated} onChange={e => onValueChange(e)} />
+                                    <input type='date' hidden={!addMode} className='form-control mt-2' name='dateCreated' value={newContributor.dateCreated} onChange={e => onValueChange(e)} />
                             </div>
                             <div className='col-md-6'>
                                 <div className="form-check mb-3 mt-2">
@@ -208,7 +208,7 @@ const Contributors = () => {
                     </Modal.Header>
                     <Modal.Body>
                         <input type='text' name='amount' placeholder='Deposit Amount' value={deposit.amount} className='form-control' onChange={e => onValueChange(e)} />
-                        <input type='date' name='date' value={deposit.date} className='form-control mt-2' onChange={e => onValueChange(e)} />
+                        <input type='date' name='date' value={Date.newDate} className='form-control mt-2' onChange={e => onValueChange(e)} />
                     </Modal.Body>
                     <Modal.Footer>
                         <button className='btn btn-secondary' onClick={onCancelClick}>

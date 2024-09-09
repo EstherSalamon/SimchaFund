@@ -18,38 +18,38 @@ namespace SimchaFund.Data
 
         public List<Simcha> GetAll()
         {
-            OfSimchosDataContext context = new OfSimchosDataContext(_connectionString);
+            SimchosDataContext context = new SimchosDataContext(_connectionString);
             return context.Simchos.ToList();
         }
 
         public void Add(Simcha s)
         {
-            OfSimchosDataContext context = new OfSimchosDataContext(_connectionString);
+            SimchosDataContext context = new SimchosDataContext(_connectionString);
             context.Simchos.Add(s);
             context.SaveChanges();
         }
 
-        public void Update(List<ActioningOne> actions, int simchaId)
+        public void Update(List<OneAction> actions, int simchaId)
         {
-            OfSimchosDataContext context = new OfSimchosDataContext(_connectionString);
-            context.Database.ExecuteSqlInterpolated($"DELETE FROM ActioningOnes WHERE SimchaId = {simchaId}");
+            SimchosDataContext context = new SimchosDataContext(_connectionString);
+            context.Database.ExecuteSqlInterpolated($"DELETE FROM Actions WHERE SimchaId = {simchaId}");
             foreach(var c in actions)
             {
                 c.Date = DateTime.Now;
-                context.ActioningOnes.Add(c);
+                context.Actions.Add(c);
             }
             context.SaveChanges();
         }
 
-        public List<ActioningOne> GetAllActionById(int id)
+        public List<OneAction> GetAllActionById(int id)
         {
-            OfSimchosDataContext context = new OfSimchosDataContext(_connectionString);
-            return context.ActioningOnes.Where(a => a.SimchaId == id).ToList();
+            SimchosDataContext context = new SimchosDataContext(_connectionString);
+            return context.Actions.Where(a => a.SimchaId == id).ToList();
         }
 
         public Simcha GetById(int id)
         {
-            OfSimchosDataContext context = new OfSimchosDataContext(_connectionString);
+            SimchosDataContext context = new SimchosDataContext(_connectionString);
             return context.Simchos.FirstOrDefault(s => s.Id == id);
         }
     }
